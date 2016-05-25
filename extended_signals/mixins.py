@@ -9,10 +9,10 @@ class FormSignalsMixin(object):
 
     def clean(self):
         super().clean()
-        form_clean.send(sender=self.__class__, form_instance=self)
-        return self.cleaned_data
+        form_clean.send(sender=self.__class__, instance=self)
+        return getattr(self, 'cleaned_data', {})
 
-     def save(self, *args, **kwargs):
-         form_pre_save.send(sender=self.__class__, instance=self, args=args, kwargs=kwargs)
-         super().save(*args, **kwargs)
-         form_post_save.send(sender=self.__class__, instance=self, args=args, kwargs=kwargs)
+    def save(self, *args, **kwargs):
+        form_pre_save.send(sender=self.__class__, instance=self, args=args, kwargs=kwargs)
+        super().save(*args, **kwargs)
+        form_post_save.send(sender=self.__class__, instance=self, args=args, kwargs=kwargs)
