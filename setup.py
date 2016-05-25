@@ -29,6 +29,7 @@ setup(
     packages=[
         'extended_signals',
     ],
+    data_files=['locale', '*.mo')],
     install_requires=[
         'six>=1.6.1',
         'Django>=1.8',
